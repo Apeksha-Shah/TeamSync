@@ -48,5 +48,6 @@ def project(request):
         )
         p1.save()
         return redirect('project')
-    return render(request,'Project/project.html')
+    all_projects = ProjectList.objects.filter(fkey=request.user.id)
+    return render(request,'Project/project.html',{'all_projects':all_projects})
    

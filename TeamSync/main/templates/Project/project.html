@@ -31,5 +31,13 @@
             </div>
         </div>
     </form>
+    <div>
+        <h1>My Projects</h1>
+        <ul>
+            {% for project in all_projects %}
+                <li>{{ project.project_name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
    <script src="{% static 'option.js' %}"></script>
 {% endblock %}
