@@ -25,7 +25,6 @@ def sign_up(request):
 def about(request):
     return render(request,'About/about.html')
 
-
 @login_required(login_url='/login')
 def contact(request):
     return render(request,'Contact/contact.html')
