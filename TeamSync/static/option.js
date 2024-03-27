@@ -39,4 +39,9 @@ document.addEventListener("DOMContentLoaded", function() {
         alert("Project Created Successfully");
     }
     
+
+    function joinProject(){
+        // SuccessModal.style.display = "block";
+        alert("Project Joined Successfully");
+    }
 });
