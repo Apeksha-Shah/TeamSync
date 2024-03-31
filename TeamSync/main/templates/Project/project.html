@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="{% static 'modal.css' %}">
 <button type="submit" id="btn1" onclick="show_option()" style="float:right; margin:12px;">Join/Create Project</button>
 
-<form method="post" action="{% url 'project' %}">
+<form method="post" action="{% url 'main:project' %}">
     {% csrf_token %}
     <div id="m1" class="modal">
         <div class="modal-content">
@@ -42,7 +42,7 @@
                 <h5 class="card-title">Project Name: {{ project.project_name }}</h5>
                 <h5 class="card-title">Project Code: {{ project.project_code }}</h5>
                 <h5 class="card-title">Status: {{ project.status }}</h5>
-                <h5><a href="{% url 'project_detail' project.project_code %}" class="btn">Enter Project</a></h5> <!-- Updated to use project.project_code -->
+                <h5><a href="{% url 'main:project_detail' project.project_code %}" class="btn">Enter Project</a></h5> <!-- Updated to use project.project_code -->
             </div>
         </div>        
         {% endfor %}
