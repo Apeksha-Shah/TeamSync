@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponse
 from .forms import RegisterForm
 from django.contrib.auth import login,logout,authenticate
@@ -50,3 +50,14 @@ def project(request):
     all_projects = ProjectList.objects.filter(fkey=request.user.id)
     return render(request,'Project/project.html',{'all_projects':all_projects})
    
+@login_required(login_url='/login')
+def project_detail(request, project_code):
+    project = get_object_or_404(ProjectList, project_code=project_code, fkey=request.user)
+    # Assuming your ProjectList model has html_code, css_code, and js_code fields
+    context = {
+        'html_code': project.html_code,
+        'css_code': project.css_code,
+        'js_code': project.js_code,
+        'project_code': project_code,
+    }
+    return render(request, 'editor.html', context)  # Adjust 'editor.html' as needed

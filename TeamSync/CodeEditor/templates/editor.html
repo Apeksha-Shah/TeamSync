@@ -1,8 +1,8 @@
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,35 +10,73 @@
     <link rel="stylesheet" href="{% static 'editor.css' %}">
     <script src="https://kit.fontawesome.com/5f29df2af7.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="container">
         <div class="left">
-            <label for="" ><i class="fa-brands fa-html5"></i> HTML</label>
-            <textarea name="html" id="html" onkeyup="run()"> </textarea>
-            
-            <label for=""><i class="fa-brands fa-css3-alt"></i> CSS</label>
-            <textarea name="css" id="css" onkeyup="run()"></textarea>
+            <label for="html"><i class="fa-brands fa-html5"></i> HTML</label>
+            <textarea name="html" id="html" onkeyup="run()">{{ html_code }}</textarea>
 
-            <label for=""><i class="fa-brands fa-js"></i> JS</label>
-            <textarea name="js" id="js" onkeyup="run()"></textarea>
+            <label for="css"><i class="fa-brands fa-css3-alt"></i> CSS</label>
+            <textarea name="css" id="css" onkeyup="run()">{{ css_code }}</textarea>
+
+            <label for="js"><i class="fa-brands fa-js"></i> JS</label>
+            <textarea name="js" id="js" onkeyup="run()">{{ js_code }}</textarea>
         </div>
 
         <div class="right">
-             <label for=""><i class="fa-brands fa-js"></i> Output</label>
+            <label for="output"><i class="fa-brands fa-js"></i> Output</label>
             <iframe id="output" title="Output"></iframe>
         </div>
-    </div>    
+    </div>
+
+    <!-- Save Button -->
+    <button onclick="saveCode()">Save</button>
 
     <script>
-        function run(){
+        function run() {
             let htmlCode = document.getElementById('html').value;
             let cssCode = document.getElementById('css').value;
             let jsCode = document.getElementById('js').value;
             let output = document.getElementById('output');
             output.contentDocument.body.innerHTML = htmlCode + "<style>" + cssCode + "</style>";
             output.contentWindow.eval(jsCode);
+        }
+        // Run initially to render the preloaded project codes
+        window.onload = function () {
+            run();
+        };
+        const projectCode = '{{ project_code }}'; // Ensure the project code is available
+        console.log(projectCode);
+        const wsStart = 'ws://';
+        let endPoint = wsStart + window.location.host + '/ws/editor/' + projectCode + '/';
+        let socket = new WebSocket(endPoint);
 
-          }
+        socket.onopen = function (e) {
+            console.log('Connection established!');
+        };
+
+        socket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            console.log(data.message);
+        };
+
+        socket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        function saveCode() {
+            let htmlCode = document.getElementById('html').value;
+            let cssCode = document.getElementById('css').value;
+            let jsCode = document.getElementById('js').value;
+
+            socket.send(JSON.stringify({
+                'html_code': htmlCode,
+                'css_code': cssCode,
+                'js_code': jsCode,
+            }));
+        }
     </script>
 </body>
+
 </html>

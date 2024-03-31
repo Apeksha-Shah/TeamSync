@@ -6,21 +6,24 @@ class CustomUser(AbstractUser):
 
 
 class ProjectList(models.Model):
-   fkey = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-   project_name = models.CharField(max_length = 100)
-   project_code = models.CharField(max_length = 100, null = True)
-   status =  models.BooleanField(default = False)
-   
+    fkey = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    project_name = models.CharField(max_length=100)
+    project_code = models.CharField(max_length=100, unique=True,null=True)  # Unique identifier for the project
+    html_code = models.TextField(null=True)  # For storing HTML content
+    css_code = models.TextField(null=True)  # For storing CSS content
+    js_code = models.TextField(null=True)  # For storing JavaScript content
+    status = models.BooleanField(default=False)
+    
+    @property   
+    def CreaterID(self):
+       return self.fkey.id  # Corrected to reflect Django's default user model field
+  
+    def ProjectContributors(self):
+       return self.fkey.id  # Note: This might need revision for actual multiple contributors
+  
+    def __str__(self):
+        return self.project_name
 
-   @property   
-   def CreaterID(self):
-       return self.fkey.userId
-  
-   def ProjectContributors(self):
-       return self.fkey.userId
-  
-   def __str__(self):
-       return self.project_name
 
 
 class Project_History(models.Model):

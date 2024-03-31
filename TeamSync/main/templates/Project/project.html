@@ -4,72 +4,76 @@
 {% load static %}
 
 {% block content %}
-   <link rel="stylesheet" href="{% static 'modal.css' %}">
-   <button type="submit" id="btn1" onclick="show_option()" style="float:right; margin:12px;">Join/Create Project</button>
+<link rel="stylesheet" href="{% static 'modal.css' %}">
+<button type="submit" id="btn1" onclick="show_option()" style="float:right; margin:12px;">Join/Create Project</button>
 
-    <form method="post" action="{% url 'project' %}">
-        {% csrf_token %}
-        <div id="m1" class="modal">
-            <div class="modal-content">
-                <div class="form-group">
-                    <label for="p_name">Project Name:</label>
-                    <input type="text" name="p_name" id="p_name" class="form-control" placeholder="Enter Project Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="p_code">Project Code:</label>
-                    <input type="text" name="p_code" id="p_code" class="form-control" placeholder="Enter Project Code" required>
-                </div>
-                <div class="form-group">
-                    <label class="checkbox-label" for="status">Status:</label>
-                    <input type="checkbox" name="status" id="status" value="1">
-                </div>
-                <div class="button-group">
-                    <button class="close" id="cancel" onclick="closeModal()">Close</button>
-                    <button id="bt2" type="submit" onclick="created()">Create</button>
-                </div>
-                <p class="join-link">Want to Join Project? <a href="#" onclick="joinProject()">Click here</a></p>
+<form method="post" action="{% url 'project' %}">
+    {% csrf_token %}
+    <div id="m1" class="modal">
+        <div class="modal-content">
+            <div class="form-group">
+                <label for="p_name">Project Name:</label>
+                <input type="text" name="p_name" id="p_name" class="form-control" placeholder="Enter Project Name"
+                    required>
             </div>
+            <div class="form-group">
+                <label for="p_code">Project Code:</label>
+                <input type="text" name="p_code" id="p_code" class="form-control" placeholder="Enter Project Code"
+                    required>
+            </div>
+            <div class="form-group">
+                <label class="checkbox-label" for="status">Status:</label>
+                <input type="checkbox" name="status" id="status" value="1">
+            </div>
+            <div class="button-group">
+                <button class="close" id="cancel" onclick="closeModal()">Close</button>
+                <button id="bt2" type="submit" onclick="created()">Create</button>
+            </div>
+            <p class="join-link">Want to Join Project? <a href="#" onclick="joinProject()">Click here</a></p>
         </div>
-    </form>
-    <div>
-        <h1>My Projects</h1>
-        <div class="card-container">
-            {% for project in all_projects %}
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Project Name : {{ project.project_name }}</h5>
-                        <h5 class="card-title">Project Code : {{ project.project_code }}</h5>
-                        <h5 class="card-title">Status : {{ project.status }}</h5>
+    </div>
+</form>
+<div>
+    <h1>My Projects</h1>
+    <div class="card-container">
+        {% for project in all_projects %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Project Name: {{ project.project_name }}</h5>
+                <h5 class="card-title">Project Code: {{ project.project_code }}</h5>
+                <h5 class="card-title">Status: {{ project.status }}</h5>
+                <h5><a href="{% url 'project_detail' project.project_code %}" class="btn">Enter Project</a></h5> <!-- Updated to use project.project_code -->
+            </div>
+        </div>        
+        {% endfor %}
+    </div>
 
-                        <!-- Add more card content here if needed -->
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-     <style>
-            .card-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px; /* Add spacing between project cards */
-            }
+    <style>
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            /* Add spacing between project cards */
+        }
 
-            .card {
-                width: 300px;
-                margin: 10px;
-                padding: 20px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-                box-shadow: 0 2px 4px rgba(104, 101, 101, 0.1);
-                background-color: #536385; /* Add background color to the cards */
-            }
+        .card {
+            width: 300px;
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(104, 101, 101, 0.1);
+            background-color: #536385;
+            /* Add background color to the cards */
+        }
 
-            .card-title {
-                font-size: 18px;
-                font-weight: bold;
-                margin-bottom: 10px;
-                color: white;
-            }
-        </style>
-   <script src="{% static 'option.js' %}"></script>
-{% endblock %}
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: white;
+        }
+    </style>
+    <script src="{% static 'option.js' %}"></script>
+    {% endblock %}
