@@ -58,7 +58,7 @@
 }
 
 .close,
-#bt2 {
+#bt2,#bt3 {
   background-color: #007bff;
   color: #fff;
   padding: 10px 20px;
@@ -68,7 +68,7 @@
 }
 
 .close:hover,
-#bt2:hover {
+#bt2:hover,#bt3:hover {
   background-color: #0056b3;
 }
 

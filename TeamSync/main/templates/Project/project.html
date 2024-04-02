@@ -12,7 +12,7 @@
     <div id="m1" class="modal">
         <div class="modal-content">
             <div class="form-group">
-                <label for="p_name">Project Name:</label>
+                <label id = "label_name" for="p_name">Project Name:</label>
                 <input type="text" name="p_name" id="p_name" class="form-control" placeholder="Enter Project Name"
                     required>
             </div>
@@ -22,14 +22,32 @@
                     required>
             </div>
             <div class="form-group">
-                <label class="checkbox-label" for="status">Status:</label>
+                <label id = "label_status" class="checkbox-label" for="status">Status:</label>
                 <input type="checkbox" name="status" id="status" value="1">
             </div>
             <div class="button-group">
                 <button class="close" id="cancel" onclick="closeModal()">Close</button>
                 <button id="bt2" type="submit" onclick="created()">Create</button>
             </div>
-            <p class="join-link">Want to Join Project? <a href="#" onclick="joinProject()">Click here</a></p>
+            <p id = "select" class="join-link">Want to Join Project? <a id = "join" href="#">Click here</a></p>
+        </div>
+    </div>
+</form>
+
+<form method="post">
+    {% csrf_token %}
+    <div id="m2" class="modal">
+        <div class="modal-content">
+            <div class="form-group">
+                <label for="p_code">Project Code:</label>
+                <input type="text" name="p_code" id="code" class="form-control" placeholder="Enter Project Code"
+                    required>
+            </div>
+            <div class="button-group">
+                <button class="close" id="cancel2" onclick="closeModal()">Close</button>
+                <button id="bt3" type="submit" onclick="joinProject()">Join</button>
+            </div>
+            <p class="join-link">Want to Create Project? <a id = "Create" href="#">Click here</a></p>
         </div>
     </div>
 </form>
