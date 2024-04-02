@@ -5,36 +5,56 @@ from django.core.exceptions import ObjectDoesNotExist
 
 class CodeEditorConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        # Extracting project_code from the URL path
         self.project_code = self.scope['url_route']['kwargs']['project_code']
+        self.project_group_name = 'project_%s' % self.project_code
+
+        # Join project group
+        await self.channel_layer.group_add(
+            self.project_group_name,
+            self.channel_name
+        )
+
         await self.accept()
 
     async def disconnect(self, close_code):
-        # Handle disconnection
-        pass
+        # Leave project group
+        await self.channel_layer.group_discard(
+            self.project_group_name,
+            self.channel_name
+        )
 
     async def receive(self, text_data):
-        # Parsing incoming data from the WebSocket
         text_data_json = json.loads(text_data)
         html_code = text_data_json['html_code']
         css_code = text_data_json['css_code']
         js_code = text_data_json['js_code']
 
-        # Save the received codes into the database
         saved = await self.save_project_codes(self.project_code, html_code, css_code, js_code)
 
-        # Notify the client about the result
         if saved:
-            response = {'message': 'Changes saved successfully'}
-        else:
-            response = {'message': 'Failed to save changes. Project not found.'}
+            # Broadcast the update to all clients in the project group
+            await self.channel_layer.group_send(
+                self.project_group_name,
+                {
+                    'type': 'broadcast_code_update',
+                    'html_code': html_code,
+                    'css_code': css_code,
+                    'js_code': js_code,
+                }
+            )
 
-        await self.send(text_data=json.dumps(response))
+    async def broadcast_code_update(self, event):
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({
+            'html_code': event['html_code'],
+            'css_code': event['css_code'],
+            'js_code': event['js_code'],
+            'message': 'Code updated'
+        }))
 
     @sync_to_async
     def save_project_codes(self, project_code, html, css, js):
         try:
-            # Attempt to find the project by its code and update it
             from main.models import ProjectList
             project = ProjectList.objects.get(project_code=project_code)
             project.html_code = html
@@ -43,5 +63,4 @@ class CodeEditorConsumer(AsyncWebsocketConsumer):
             project.save()
             return True
         except ObjectDoesNotExist:
-            # Return False if the project does not exist
             return False

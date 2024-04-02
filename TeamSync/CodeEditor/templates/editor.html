@@ -46,8 +46,10 @@
         window.onload = function () {
             run();
         };
+
         const projectCode = '{{ project_code }}'; // Ensure the project code is available
         console.log(projectCode);
+        
         const wsStart = 'ws://';
         let endPoint = wsStart + window.location.host + '/ws/editor/' + projectCode + '/';
         let socket = new WebSocket(endPoint);
@@ -58,7 +60,16 @@
 
         socket.onmessage = function (e) {
             const data = JSON.parse(e.data);
-            console.log(data.message);
+            if (data.html_code !== undefined) {
+                document.getElementById('html').value = data.html_code;
+            }
+            if (data.css_code !== undefined) {
+                document.getElementById('css').value = data.css_code;
+            }
+            if (data.js_code !== undefined) {
+                document.getElementById('js').value = data.js_code;
+            }
+            run(); // Update the output iframe
         };
 
         socket.onclose = function (e) {
