@@ -12,6 +12,7 @@ class CodeEditorConsumer(AsyncWebsocketConsumer):
         await self.channel_layer.group_add(
             self.project_group_name,
             self.channel_name
+            
         )
 
         await self.accept()

@@ -6,51 +6,50 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'modal.css' %}">
 <button type="submit" id="btn1" onclick="show_option()" style="float:right; margin:12px;">Join/Create Project</button>
-
 <form method="post" action="{% url 'main:project' %}">
     {% csrf_token %}
+    <input type="hidden" name="action" value="create" />
     <div id="m1" class="modal">
         <div class="modal-content">
             <div class="form-group">
-                <label id = "label_name" for="p_name">Project Name:</label>
-                <input type="text" name="p_name" id="p_name" class="form-control" placeholder="Enter Project Name"
-                    required>
+                <label id="label_name" for="p_name">Project Name:</label>
+                <input type="text" name="p_name" id="p_name" class="form-control" placeholder="Enter Project Name" required>
             </div>
             <div class="form-group">
                 <label for="p_code">Project Code:</label>
-                <input type="text" name="p_code" id="p_code" class="form-control" placeholder="Enter Project Code"
-                    required>
+                <input type="text" name="p_code" id="p_code" class="form-control" placeholder="Enter Project Code" required>
             </div>
             <div class="form-group">
-                <label id = "label_status" class="checkbox-label" for="status">Status:</label>
+                <label id="label_status" class="checkbox-label" for="status">Status:</label>
                 <input type="checkbox" name="status" id="status" value="1">
             </div>
             <div class="button-group">
                 <button class="close" id="cancel" onclick="closeModal()">Close</button>
                 <button id="bt2" type="submit" onclick="created()">Create</button>
             </div>
-            <p id = "select" class="join-link">Want to Join Project? <a id = "join" href="#">Click here</a></p>
+            <p id="select" class="join-link">Want to Join Project? <a id="join" href="#">Click here</a></p>
         </div>
     </div>
 </form>
 
-<form method="post">
+<form method="post" action="{% url 'main:project' %}">
     {% csrf_token %}
+    <input type="hidden" name="action" value="join" />
     <div id="m2" class="modal">
         <div class="modal-content">
             <div class="form-group">
-                <label for="p_code">Project Code:</label>
-                <input type="text" name="p_code" id="code" class="form-control" placeholder="Enter Project Code"
-                    required>
+                <label for="join_project_code">Project Code:</label>
+                <input type="text" name="join_project_code" id="code" class="form-control" placeholder="Enter Project Code" required>
             </div>
             <div class="button-group">
                 <button class="close" id="cancel2" onclick="closeModal()">Close</button>
                 <button id="bt3" type="submit" onclick="joinProject()">Join</button>
             </div>
-            <p class="join-link">Want to Create Project? <a id = "Create" href="#">Click here</a></p>
+            <p class="join-link">Want to Create Project? <a id="Create" href="#">Click here</a></p>
         </div>
     </div>
 </form>
+
 <div>
     <h1>My Projects</h1>
     <div class="card-container">

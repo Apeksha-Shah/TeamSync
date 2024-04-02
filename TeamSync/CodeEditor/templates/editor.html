@@ -15,13 +15,13 @@
     <div class="container">
         <div class="left">
             <label for="html"><i class="fa-brands fa-html5"></i> HTML</label>
-            <textarea name="html" id="html" onkeyup="run()">{{ html_code }}</textarea>
+            <textarea name="html" id="html">{{ html_code }}</textarea>
 
             <label for="css"><i class="fa-brands fa-css3-alt"></i> CSS</label>
-            <textarea name="css" id="css" onkeyup="run()">{{ css_code }}</textarea>
+            <textarea name="css" id="css">{{ css_code }}</textarea>
 
             <label for="js"><i class="fa-brands fa-js"></i> JS</label>
-            <textarea name="js" id="js" onkeyup="run()">{{ js_code }}</textarea>
+            <textarea name="js" id="js">{{ js_code }}</textarea>
         </div>
 
         <div class="right">
@@ -29,9 +29,6 @@
             <iframe id="output" title="Output"></iframe>
         </div>
     </div>
-
-    <!-- Save Button -->
-    <button onclick="saveCode()">Save</button>
 
     <script>
         function run() {
@@ -42,12 +39,12 @@
             output.contentDocument.body.innerHTML = htmlCode + "<style>" + cssCode + "</style>";
             output.contentWindow.eval(jsCode);
         }
-        // Run initially to render the preloaded project codes
+        
         window.onload = function () {
             run();
         };
 
-        const projectCode = '{{ project_code }}'; // Ensure the project code is available
+        const projectCode = '{{ project_code }}';
         console.log(projectCode);
         
         const wsStart = 'ws://';
@@ -69,12 +66,20 @@
             if (data.js_code !== undefined) {
                 document.getElementById('js').value = data.js_code;
             }
-            run(); // Update the output iframe
+            run();
         };
 
         socket.onclose = function (e) {
             console.error('Chat socket closed unexpectedly');
         };
+
+        function debounce(func, timeout = 2000) {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => { func.apply(this, args); }, timeout);
+            };
+        }
 
         function saveCode() {
             let htmlCode = document.getElementById('html').value;
@@ -87,6 +92,12 @@
                 'js_code': jsCode,
             }));
         }
+
+        const debouncedSave = debounce(() => saveCode());
+
+        document.getElementById('html').addEventListener('keyup', debouncedSave);
+        document.getElementById('css').addEventListener('keyup', debouncedSave);
+        document.getElementById('js').addEventListener('keyup', debouncedSave);
     </script>
 </body>
 
