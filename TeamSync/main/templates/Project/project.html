@@ -5,7 +5,10 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'modal.css' %}">
-<button type="submit" id="btn1" onclick="show_option()" style="float:right; margin:12px;" class="join-create-btn">Join/Create Project</button>
+<div style="text-align: center;">
+    <button type="submit" id="btn1" onclick="show_option()" class="join-create-btn">Join/Create Project</button>
+</div>
+
 <form method="post" action="{% url 'main:project' %}">
     {% csrf_token %}
     <input type="hidden" name="action" value="create" />
@@ -50,95 +53,98 @@
     </div>
 </form>
 
-<div>
-    <div class="card-container">
-        {% for project in all_projects %}
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Project Name: {{ project.project_name }}</h5>
-                <h5 class="card-subtitle">Project Code: {{ project.project_code }}</h5>
-                <h5 class="card-status">Status: {{ project.status }}</h5>
-            </div>
-            <h5><a href="{% url 'main:project_detail' project.project_code %}" class="btn">Enter Project</a></h5> <!-- Updated to use project.project_code -->
-        </div>        
-        {% endfor %}
-    </div>
+<div class="card-container">
+    {% for project in all_projects %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Project Name: {{ project.project_name }}</h5>
+            <h5 class="card-subtitle">Project Code: {{ project.project_code }}</h5>
+            <h5 class="card-status">Status: {{ project.status }}</h5>
+        </div>
+        <h5><a href="{% url 'main:project_detail' project.project_code %}" class="btn">Enter Project</a></h5> <!-- Updated to use project.project_code -->
+    </div>        
+    {% endfor %}
+</div>
+<style>
+    body {
+        background-color: gray;
+    }
+    
+    .join-create-btn {
+        margin: 40px auto 40px; /* Set margin to auto to center horizontally and add space below */
+        display: block; /* Set display to block to center vertically */
+        background-color:#45474a;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 16px;
+        cursor: pointer;
+    }
+    
+    .join-create-btn:hover {
+        background-color: #8b8d8f;
+    }
+    
+    .content-container {
+        background-color: #f0f0f0; /* Set the desired background color */
+    }
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin: 10px auto 20px; /* Add space below the row of cards */
+    }
 
-    <style>
-        .join-create-btn {
-            float: right;
-            margin: 12px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 16px;
-            cursor: pointer;
-        }
-        
-        .join-create-btn:hover {
-            background-color: #0056b3;
-        }
-        
-        .content-container {
-            background-color: #f0f0f0; /* Set the desired background color */
-        }
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-    
-        .card {
-            width: 300px;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: #fff;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-    
-        .card:hover {
-            transform: translateY(-5px);
-        }
-    
-        .card-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 10px;
-        }
-    
-        .card-subtitle {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 5px;
-        }
-    
-        .card-status {
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 15px;
-        }
-    
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-    
-        .btn:hover {
-            background-color: #0056b3;
-        }
-    
-    </style>
-    <script src="{% static 'option.js' %}"></script>
-    {% endblock %}
+    .card {
+        width: 300px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+        text-align: center;
+        transition: transform 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .card-subtitle {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .card-status {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #45474a;
+        color: #ebdede;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color:#8b8d8f;
+    }
+
+</style>
+
+<script src="{% static 'option.js' %}"></script>
+{% endblock %}

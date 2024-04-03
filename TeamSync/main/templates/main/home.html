@@ -2,4 +2,74 @@
 
 {% block title %}Home Page {% endblock %}
 
-{% block content %}<h1>Home Page!</h1> {% endblock %}
+{% block content %}
+
+<style>
+    body {
+        background-color: gray;
+        font-family: Arial, sans-serif; /* Change font family */
+    }
+
+    .animated-text-container {
+        display: flex;
+        justify-content: center; /* Center align horizontally */
+        align-items: center;
+        height: 100vh;
+        overflow: hidden; /* Hide overflow to prevent horizontal scrolling */
+        flex-direction: column; /* Display elements in a column */
+        text-align: center; /* Center align text horizontally */
+    }
+
+    .team-sync {
+        font-size: 64px; /* Increase font size */
+        color: #13101e; /* Change color */
+        font-weight: bold; /* Add font weight */
+        animation: slide-in-left 1s forwards; /* Move animation to the element itself */
+        margin-bottom: 20px; /* Adjust vertical position */
+    }
+
+    .description {
+        font-size: 32px; /* Increase font size */
+        color: #13101e; /* Use a darker color */
+        animation: slide-in-right 1s forwards; /* Move animation to the element itself */
+        margin-top: 20px; /* Adjust vertical position */
+    }
+
+    @keyframes slide-in-left {
+        0% {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-in-right {
+        0% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+<div class="animated-text-container">
+    <div>
+        <h1 class="animated-text team-sync">TeamSync</h1>
+    </div>
+    <div>
+        <h2 class="animated-text description">
+            A dynamic online environment for seamless collaboration 
+            <br>among users, developers, and project creators. <br>
+            Features include user registration, project initiation and management,<br> real-time communication,
+            feedback mechanisms, and administrator/moderator oversight.
+        </h2>
+    </div>
+</div>
+
+{% endblock %}
