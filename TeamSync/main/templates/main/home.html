@@ -6,7 +6,7 @@
 
 <style>
     body {
-        background-color: rgb(72, 68, 68);
+        background-color: rgb(10, 10, 10);
         font-family: Arial, sans-serif; /* Change font family */
     }
 
@@ -21,16 +21,16 @@
     }
 
     .team-sync {
-        font-size: 64px; /* Increase font size */
-        color: #13101e; /* Change color */
+        font-size: 62px; /* Increase font size */
+        color: #f4f3f9; /* Change color */
         font-weight: bold; /* Add font weight */
         animation: slide-in-left 1s forwards; /* Move animation to the element itself */
         margin-bottom: 20px; /* Adjust vertical position */
     }
 
     .description {
-        font-size: 32px; /* Increase font size */
-        color: #13101e; /* Use a darker color */
+        font-size: 28px; /* Increase font size */
+        color: #e9e7ee; /* Use a darker color */
         animation: slide-in-right 1s forwards; /* Move animation to the element itself */
         margin-top: 20px; /* Adjust vertical position */
     }
@@ -56,9 +56,18 @@
             opacity: 1;
         }
     }
+    .logo {
+        border-radius: 50%; /* Makes the image rounded */
+        width: 200px; /* Adjust width as needed */
+        height: 200px; /* Adjust height as needed */
+        margin-bottom: 50px;
+    }
 </style>
 
 <div class="animated-text-container">
+    <div>
+        <img src="/static/image2.webp" alt="TeamSync Logo" class="logo">
+    </div>
     <div>
         <h1 class="animated-text team-sync">TeamSync</h1>
     </div>
