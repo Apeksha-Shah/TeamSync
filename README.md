@@ -6,7 +6,7 @@ TeamSync is a dynamic online platform designed to facilitate seamless collaborat
 
 ## How it Works
 
-1. **User Registration:**Users can sign up for accounts to access TeamSync features.
+1. **User Registration:** Users can sign up for accounts to access TeamSync features.
 
 2. **Project Initiation and Management:** Project creators can initiate and manage projects within the platform.
    
