@@ -9,6 +9,7 @@
     <button type="submit" id="btn1" onclick="show_option()" class="join-create-btn">Join/Create Project</button>
 </div>
 
+
 <form method="post" action="{% url 'main:project' %}">
     {% csrf_token %}
     <input type="hidden" name="action" value="create" />
@@ -52,6 +53,15 @@
         </div>
     </div>
 </form>
+
+{% if messages %}
+    {% for message in messages %}
+        <div align="center" style="color: red;" class="{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
 
 <div class="card-container">
     {% for project in all_projects %}
@@ -101,9 +111,10 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background-color: #2d2b2c;
+        background-color: #2f3647;
         text-align: center;
         transition: transform 0.3s;
+        border: 1px solid #434649;
     }
 
     .card:hover {

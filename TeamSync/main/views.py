@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render,redirect
-from django.http import Http404, HttpResponse
+from django.contrib import messages
 from .forms import RegisterForm
 from django.contrib.auth import login,logout,authenticate
 from .models import ProjectList
@@ -33,11 +33,10 @@ def contact(request):
 @login_required(login_url='/login')
 def project(request):
     if request.method == "POST":
-        # Check if this is a project creation request
         if 'p_name' in request.POST and 'p_code' in request.POST:
             p_name = request.POST['p_name']
             p_code = request.POST['p_code']
-            status = request.POST.get('status', '1')  # by default status = 1
+            status = request.POST.get('status', '1')  
 
             status = True if status == '1' else False
 
@@ -52,7 +51,6 @@ def project(request):
             join_project_code = request.POST['join_project_code']
             project_to_join = ProjectList.objects.filter(project_code=join_project_code).first()
             if project_to_join:
-                # Assuming ProjectList model has a ManyToMany field 'contributors' for users
                 project_to_join.contributors.add(request.user)
 
         return redirect('main:project')
@@ -64,7 +62,6 @@ def project(request):
 
 @login_required(login_url='/login')
 def project_detail(request, project_code):
-    # Attempt to fetch the project where the user is the creator or a contributor
     project = ProjectList.objects.filter(
         project_code=project_code
     ).filter(
@@ -72,10 +69,9 @@ def project_detail(request, project_code):
     ).distinct().first()
 
     if not project:
-        # If no such project exists for the user, raise 404
-        raise Http404("Project does not exist or you do not have permission to view it.")
+        messages.error(request, "Project does not exist or you do not have permission to view it.")
+        return redirect('main:project') 
 
-    # Assuming your ProjectList model has html_code, css_code, and js_code fields
     context = {
         'html_code': project.html_code,
         'css_code': project.css_code,

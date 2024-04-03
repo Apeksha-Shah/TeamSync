@@ -11,7 +11,7 @@
     <script src="https://kit.fontawesome.com/5f29df2af7.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<body class="font-mono">
     <div class="container">
         <div class="left">
             <label for="html"><i class="fa-brands fa-html5"></i> HTML</label>
@@ -73,7 +73,7 @@
             console.error('Chat socket closed unexpectedly');
         };
 
-        function debounce(func, timeout = 2000) {
+        function debounce(func, timeout = 100) {
             let timer;
             return (...args) => {
                 clearTimeout(timer);

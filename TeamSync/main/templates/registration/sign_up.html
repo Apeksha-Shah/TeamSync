@@ -4,15 +4,29 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-
+<h1>Registration form</h1>
 <form method="post">
 {% csrf_token %}{{form|crispy}}
 <p>Have an account? Login <a href="/login">Here</a></p>
 <button type="submit" class="btn btn-success">Register</button>
 </form>
 <style>
-    body{
-        background-color:gray;
+     form{
+        background-color: rgb(255, 255, 255);
+        width: 600px;
+        padding: 20px;
+        margin:  60px auto;
+        border-radius: 20px;
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    h1{
+        text-align: center;
+        color: white;
+
+        margin: 20px auto;
+
+        
     }
 </style>
 {% endblock %}
