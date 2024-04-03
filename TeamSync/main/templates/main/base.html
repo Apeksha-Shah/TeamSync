@@ -15,6 +15,29 @@
     <!-- {% block title%}
     {% endblock title %} -->
 
+    <style>
+        .btn-login {
+            background-color: #d3d5db; /* Color for the login button */
+            border-color: #4e4f53; /* Border color for the login button */
+        }
+    
+        .btn-login:hover {
+            background-color: #32353e; /* Color on hover */
+            border-color: #121213; /* Border color on hover */
+        }
+        .navbar-nav .nav-link.active {
+            background-color: #57595e; /* Background color for the active link */
+            border-color: #121213;
+            color: #ffffff; /* Text color for the active link */
+            transition: background-color 0.3s ease-in-out; /* Add transition for background color */
+        }
+        .btn-gray {
+            background-color: gray;
+            /* Add any additional styling you want for the gray button */
+            color: white; /* Example: white text color */
+            /* Add more styles if needed */
+        }
+    </style>
 </head>
 
 <body>
@@ -24,59 +47,43 @@
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+            <div class="collapse navbar-collapse justify-content-start" id="navbarNavAltMarkup">
                 {% if user.is_authenticated %}
                     <div class="navbar-nav">
-                        <a class="nav-link nav-link {% if request.path == '/' %}active{% endif %} text-black" href="">Home</a>
-                        <a class="nav-link nav-link {% if request.path == '/about' %}active{% endif %} text-black" href="/about">About Me</a>
-                        <a class="nav-link nav-link {% if request.path == '/project' %}active{% endif %} text-black" href="/project">Project</a>
-                        <a class="nav-link nav-link {% if request.path == '/contact' %}active{% endif %} text-black" href="/contact">Contact Us</a>
+                        <a class="nav-link nav-link {% if request.path == '/' %}active{% endif %} text-white" href="">Home</a>
+                        <a class="nav-link nav-link {% if request.path == '/about' %}active{% endif %} text-white" href="/about">About Me</a>
+                        <a class="nav-link nav-link {% if request.path == '/project' %}active{% endif %} text-white" href="/project">Project</a>
+                        <a class="nav-link nav-link {% if request.path == '/contact' %}active{% endif %}text-white " href="/contact">Contact Us</a>
                     </div>
                 {% else %}
                     <div class="navbar-nav">
-                        <a class="nav-link nav-link {% if request.path == '/' %}active{% endif %} text-black" href="">Home</a>
-                        <a class="nav-link nav-link {% if request.path == '/about' %}active{% endif %} text-black" href="/about">About Me</a>
-                        <a class="nav-link nav-link {% if request.path == '/contact' %}active{% endif %} text-black" href="/contact">Contact Us</a>
+                        <a class="nav-link nav-link {% if request.path == '/' %}active{% endif %} text-white" href="">Home</a>
+                        <a class="nav-link nav-link {% if request.path == '/about' %}active{% endif %} text-white" href="/about">About Me</a>
+                        <a class="nav-link nav-link {% if request.path == '/contact' %}active{% endif %}text-white " href="/contact">Contact Us</a>
                     </div>
                 {% endif %}
             </div>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                <span class="navbar-text text-black">Logged in as {{user.username}} | </span>
+                <span class="navbar-text text-white">Logged in as {{user.username}} | </span>
 
                 <a class="nav-link">
                     <li class="nav-item">
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-logout">Logout</button>
+                            <button type="submit" class="btn btn-gray btn-logout">Logout</button>
                         </form>
                     </li>
                 </a>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link btn btn-danger btn-login" href="/login">Login</a>
+                    <a class="nav-link btn btn-gray btn-login" href="/login">Login</a>
                 </li>
                 {% endif %}
 
             </ul>
         </div>
     </nav>
-    <style>
-        .btn-login {
-            background-color: #dc3545; /* Color for the login button */
-            border-color: #dc3545; /* Border color for the login button */
-        }
-    
-        .btn-login:hover {
-            background-color: #c82333; /* Color on hover */
-            border-color: #bd2130; /* Border color on hover */
-        }
-        .navbar-nav .nav-link.active {
-            background-color: #dc3545; /* Background color for the active link */
-            color: #ffffff; /* Text color for the active link */
-            transition: background-color 0.3s ease-in-out; /* Add transition for background color */
-        }
-    </style>
     
     
     <div class="container">
