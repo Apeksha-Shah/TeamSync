@@ -50,7 +50,7 @@
             <div class="collapse navbar-collapse justify-content-start" id="navbarNavAltMarkup">
                 {% if user.is_authenticated %}
                     <div class="navbar-nav">
-                        <a class="nav-link nav-link {% if request.path == '/' %}active{% endif %} text-white" href="">Home</a>
+                        <a class="nav-link nav-link {% if request.path == '/' %}active{% endif %} text-white" href="/">Home</a>
                         <a class="nav-link nav-link {% if request.path == '/about' %}active{% endif %} text-white" href="/about">About Me</a>
                         <a class="nav-link nav-link {% if request.path == '/project' %}active{% endif %} text-white" href="/project">Project</a>
                         <a class="nav-link nav-link {% if request.path == '/contact' %}active{% endif %}text-white " href="/contact">Contact Us</a>
